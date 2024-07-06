@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "useDefineForClassFields": true,
+        "module": "ES2022",
+        "lib": [
+            "es2022",
+            "dom",
+            "dom.iterable"
+        ],
+        "outDir": "./raycast/scripts/",
+        "moduleResolution": "Node",
+        "noEmit": false,
+        "sourceMap": true,
+        /* Linting */
+        "strict": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": [
+        "./src",
+        "src/canvas.ts",
+        "src/main.ts",
+        "src/map.ts",
+        "src/math.ts",
+        "src/rays.ts"
+    ]
+}

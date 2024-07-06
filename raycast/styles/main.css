@@ -1,0 +1,40 @@
+* {
+  color: white;
+  image-rendering: pixelated;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+body {
+  padding-top: 15px;
+  padding-left: 15px;
+}
+
+label {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+canvas {
+  margin: 0px;
+  background-color: black;
+  border: 1px solid white;
+}
+
+input,
+select,
+option,
+textarea {
+  background-color: black;
+  color: white;
+}
+
+input[type="button"] {
+  border: 1px solid white;
+}
