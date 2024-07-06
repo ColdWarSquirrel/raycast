@@ -1,4 +1,4 @@
-import { degreesToRadians, fixAngle, distance, PI, PI2, PI3 } from './math.js';
+import { degreesToRadians, fixAngle, distance, PI } from './math.js';
 import { player } from './player.js';
 import { mapX, mapY, map, colours } from './map.js';
 import { ctx, drawRay3D, drawRay2D } from './canvas.js';
@@ -54,6 +54,8 @@ export const fireVerticalRay = function (startX = player.x, startY = player.y, r
     let rayX = 0, rayY = 0;
     let rayRadian = degreesToRadians(rayAngle);
     let nTan = -Math.tan(rayRadian);
+    let PI3 = 3 * PI / 2;
+    let PI2 = PI / 2;
     if (rayRadian > PI2 && rayRadian < PI3) { // left
         rayX = ((player.x >> 6) << 6) - 0.0001;
         rayY = (player.x - rayX) * nTan + player.y;
@@ -121,7 +123,7 @@ export const drawRays = function (amount = 90, topdown = false) {
     //let playerRadian = degreesToRadians(fixAngle(player.direction));
     let rayAmount = amount;
     let mapIndex = 0;
-    let rayAngle = 0, rayRadian = 0;
+    let rayAngle = player.direction, rayRadian = 0;
     let lineWidth = ctx.canvas.width / rayAmount;
     for (let ray = 0; ray < rayAmount; ray++) {
         let colour = 'blue';
