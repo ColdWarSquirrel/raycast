@@ -4,7 +4,7 @@ export const player = {
   x: 1.62 * mapS,
   y: 1.94 * mapS,
   direction: 17,
-  lookSensitivity: 2,
+  lookSensitivity: 1,
   speed: 75,
   sprintSpeed: 150
 }

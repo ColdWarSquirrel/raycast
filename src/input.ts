@@ -11,6 +11,11 @@ export class ElementInput<T extends HTMLElement> {
 export class Mouse {
   public x: number = 0;
   public y: number = 0;
+  public previousX: number = 0;
+  public previousY: number = 0;
+  public movementX: number = 0;
+  public movementY: number = 0;
+  public locked: boolean = false;
   public target: EventTarget | null = null;
   public buttons: { [key: number]: boolean } = {};
   onmousedown(button: number) { button; }
@@ -41,8 +46,19 @@ export class Mouse {
     this.onmouseup(e.button);
   }
   handleMouseMove(e: MouseEvent) {
-    this.x = e.clientX;
-    this.y = e.clientY;
+    this.previousX = this.x;
+    this.previousY = this.y;
+    if (!this.locked) {
+      this.x = e.clientX;
+      this.y = e.clientY;
+      this.movementX = this.x - this.previousX;
+      this.movementY = this.y - this.previousY;
+    } else {
+      this.x += e.movementX;
+      this.y += e.movementY;
+      this.movementX = e.movementX;
+      this.movementY = e.movementY;
+    }
     this.target = e.target;
   }
   constructor() {

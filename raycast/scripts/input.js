@@ -10,6 +10,11 @@ export class ElementInput {
 export class Mouse {
     x = 0;
     y = 0;
+    previousX = 0;
+    previousY = 0;
+    movementX = 0;
+    movementY = 0;
+    locked = false;
     target = null;
     buttons = {};
     onmousedown(button) { button; }
@@ -41,8 +46,20 @@ export class Mouse {
         this.onmouseup(e.button);
     }
     handleMouseMove(e) {
-        this.x = e.clientX;
-        this.y = e.clientY;
+        this.previousX = this.x;
+        this.previousY = this.y;
+        if (!this.locked) {
+            this.x = e.clientX;
+            this.y = e.clientY;
+            this.movementX = this.x - this.previousX;
+            this.movementY = this.y - this.previousY;
+        }
+        else {
+            this.x += e.movementX;
+            this.y += e.movementY;
+            this.movementX = e.movementX;
+            this.movementY = e.movementY;
+        }
         this.target = e.target;
     }
     constructor() {

@@ -2,13 +2,32 @@ import { mapX, mapY, mapS, map, fov, FLOOR, SKY, colours } from './map.js';
 import { drawRays } from './rays.js';
 import { player } from './player.js';
 import { RAD, PI } from './math.js';
+import { KEYBOARD, MOUSE } from './input.js';
 export const canvas = document.createElement('canvas');
 document.body.append(canvas);
 export const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
+export let pointerLocked = false;
 
 let ratio = mapX / mapY;
 
 canvas.width = (window.innerHeight - canvas.offsetTop) * 0.99; canvas.height = canvas.width * ratio;
+
+canvas.addEventListener("click", async () => {
+  // @ts-ignore
+  await canvas.requestPointerLock({ unadjustedMovement: true });
+});
+
+document.addEventListener("pointerlockchange", () => {
+  if (document.pointerLockElement === canvas) {
+    MOUSE.locked = true;
+  } else {
+    MOUSE.locked = false;
+  }
+}, false);
+
+KEYBOARD.addKeyEvent('down', (key: string) => {
+  if (key == "Escape") document.exitPointerLock();
+});
 
 export const drawTopDownMap = function () {
   ctx.fillStyle = FLOOR.rgb;

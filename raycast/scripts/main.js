@@ -1,6 +1,6 @@
 "use strict";
 import { drawAll } from './canvas.js';
-import { ElementInput, KEYBOARD } from './input.js';
+import { ElementInput, KEYBOARD, MOUSE } from './input.js';
 import { mapS, toggleTopDown, topdown } from './map.js';
 import { degreesToRadians, fixAngle } from './math.js';
 import { player, movePlayer } from './player.js';
@@ -13,11 +13,23 @@ const loop = function (now) {
     let playerMapCoordsX = (player.x / mapS) | 0;
     let playerMapCoordsY = (player.y / mapS) | 0;
     let sprinting = KEYBOARD.keysDown["ShiftLeft"];
-    if (KEYBOARD.keysDown["KeyD"] === true) {
-        player.direction = fixAngle(player.direction + player.lookSensitivity);
+    if (MOUSE.locked) {
+        if (MOUSE.movementX != 0) {
+            player.direction -= MOUSE.movementX * player.lookSensitivity;
+            if (player.direction > 360 || player.direction < 0)
+                player.direction = fixAngle(player.direction);
+        }
     }
-    if (KEYBOARD.keysDown["KeyA"] === true) {
-        player.direction = fixAngle(player.direction - player.lookSensitivity);
+    MOUSE.movementX = 0;
+    if (KEYBOARD.keysDown["ArrowRight"] === true) {
+        player.direction -= player.lookSensitivity;
+        if (player.direction > 360 || player.direction < 0)
+            player.direction = fixAngle(player.direction);
+    }
+    if (KEYBOARD.keysDown["ArrowLeft"] === true) {
+        player.direction += player.lookSensitivity;
+        if (player.direction > 360 || player.direction < 0)
+            player.direction = fixAngle(player.direction);
     }
     if (KEYBOARD.keysDown["KeyW"] === true) {
         movePlayer(1, direction, sprinting, delta);
